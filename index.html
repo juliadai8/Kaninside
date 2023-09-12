@@ -1,12 +1,13 @@
 <html>
     <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
         <title>Kanin</title>
         <link rel="stylesheet" href="style.css">
         <link rel="icon" href="https://png.pngtree.com/png-clipart/20230528/ourmid/pngtree-funny-bunny-or-rabbit-for-easter-day-on-isolated-background-png-image_7110057.png">
     </head>
     <body>
         <center>
-            <h1>Kanin 🐰</h1>
+            <h1 class="tittel" onmouseover="test()">Kanin 🐰</h1>
             <h3>Kaniner spiser 🥕</h3>
             <img src="https://www.zooplus.no/magasin/wp-content/uploads/2018/11/kanin.jpg"
             style="height: 300;">
@@ -20,6 +21,42 @@
             rovpattedyr og jegere. Man skiller imidlertid gjerne mellom villkanin og tamkanin.
             Oppdrett for slakt er også vanlig.</p>
         </center>
-        
+        <input type="text" onchange="inputHandler(event)"/>
+        <button onclick="test2()">Klikk på meg</button>
+        <button onclick="getCatFact()">Klikk på meg</button>
     </body>
+    <script>
+        let pokemon = ""
+        function test(){
+            $("h1.tittel").html("😂🤣😂🤣😂🤣")
+        }
+        function inputHandler(e){
+            console.log("test")
+            console.log(e.target.value)
+            pokemon = e.target.value
+        }
+        function test2(){
+
+            console.log(pokemon)
+
+
+            fetch("https://pokeapi.co/api/v2/pokemon/" + pokemon)
+            .then(
+                response => response.json().then(
+                    json => $("img").attr("src", json.sprites.front_default)
+                ))
+        }
+        let catFactCount = 0
+        function getCatFact(){
+
+            fetch("https://cat-fact.herokuapp.com/facts")
+            .then(
+                response => response.json().then(
+                    json => {console.log(json)
+                        console.log(json[catFactCount].text)
+                        catFactCount += 1
+                    }
+                ))
+        }
+    </script>
 </html>
